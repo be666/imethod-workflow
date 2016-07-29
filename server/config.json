@@ -1,7 +1,12 @@
 {
   "restApiRoot": "/api",
   "host": "0.0.0.0",
-  "port": 3000,
+  "port": 12345,
+  "auth": {
+    "appId": "a18760360928033f4e20ac879af6264a",
+    "clientKey": "2c45c387bec512049550fd77f8ba7ab7138dcff3",
+    "AccessTokens": "http://auth.bcaring.cn/api/AccessTokens"
+  },
   "remoting": {
     "context": {
       "enableHttpContext": false

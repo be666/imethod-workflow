@@ -13,9 +13,6 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
   "AccessToken": {
     "dataSource": "db",
     "public": false
@@ -31,5 +28,17 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "AuthAccessToken": {
+    "dataSource": "remote",
+    "public": false
+  },
+  "AuthAccessUser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "AuthUser": {
+    "dataSource": "db",
+    "public": true
   }
 }

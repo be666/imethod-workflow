@@ -1,6 +1,17 @@
 {
   "db": {
     "name": "db",
-    "connector": "memory"
+    "connector": "memory",
+    "file": "server/resource/memory/db.json"
+  },
+  "workflow": {
+    "name": "workflow",
+    "connector": "memory",
+    "file": "server/resource/memory/workflow.json"
+  },
+  "remote": {
+    "url": "http://auth.bcaring.cn/api",
+    "name": "remote",
+    "connector": "remote"
   }
 }
