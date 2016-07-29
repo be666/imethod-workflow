@@ -3,13 +3,42 @@ var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
 
-module.exports = {
-  entry: {
-    app: './src/main.js'
+let entryList = function () {
+  let entryList = {};
+  let enterMap = config.enterMap;
+  for (let moduleName in enterMap) {
+    let moduleEnterList = enterMap[moduleName];
+    moduleEnterList.forEach(function (x) {
+      let enter = Object.keys(x)[0];
+      if (x[enter]['js']) {
+        entryList[enter] = path.resolve(__dirname, `../${x[enter]['js']}`)
+      } else {
+        entryList[enter] = path.resolve(__dirname, `../src/${moduleName}/${enter}.js`)
+      }
+    });
+  }
+  return entryList;
+};
+let eslintConf = config.build.config ? [
+  {
+    test: /\.vue$/,
+    loader: 'eslint',
+    include: projectRoot,
+    exclude: /node_modules/
   },
+  {
+    test: /\.js$/,
+    loader: 'eslint',
+    include: projectRoot,
+    exclude: /node_modules/
+  }
+] : [];
+
+module.exports = {
+  entry: entryList(),
   output: {
     path: config.build.assetsRoot,
-    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
+    publicPath: config.build.assetsPublicPath,
     filename: '[name].js'
   },
   resolve: {
@@ -18,27 +47,15 @@ module.exports = {
     alias: {
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      'components': path.resolve(__dirname, '../src/components'),
+      'IConf': path.resolve(__dirname, '../src/config.js')
     }
   },
   resolveLoader: {
     fallback: [path.join(__dirname, '../node_modules')]
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.vue$/,
-        loader: 'eslint',
-        include: projectRoot,
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: projectRoot,
-        exclude: /node_modules/
-      }
-    ],
+    preLoaders: eslintConf,
     loaders: [
       {
         test: /\.vue$/,
